@@ -5,7 +5,7 @@ services:
     build: ./BackendTaskUsingGraphQL
     container_name: backend-task-api
     ports:
-      - "5000:80"   # host:container mapping
+      - "5000:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
@@ -25,6 +25,14 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  frontend:
+    build: ../task-frontend
+    container_name: task-frontend
+    ports:
+      - "5174:80"   # Host 5174 -> container 80
+    depends_on:
+      - backend
 
 volumes:
   postgres_data:
